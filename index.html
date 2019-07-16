@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/modbootstrapstyle.css">
+
+    <title>~ Get-Giphy ~</title>
+</head>
+
+
+
+<body class="d-flex flex-column h-90">
+    <!-- Begin page content -->
+    <main role="main" class="flex-shrink-0 mainfont my-4 mt-0" id="maincontainerindexpage">
+        <!-- MAIN _ Begin page content -->
+
+        <div class="mt-5 container row mx-auto" id="mainRowcontent">
+            <div class="col-1"></div>
+            <div class="col-10 text-danger">
+
+
+                <!-- FROM ADD BUTTONS EXAMPLE - - test adding buttons -->
+                <h1>Gif Search</h1>
+
+                <!-- Gif buttons will get dumped here -->
+                <div id="gif-buttons-view"></div>
+
+                <form id="gif-form">
+                    <label for="gif-input">Add a gif, Yo!</label>
+                    <input type="text" id="gif-input"><br>
+
+                    <!-- Button triggers new gif to be added -->
+                    <input id="add-gif" type="submit" value="Add a Gif, Yo!">
+                </form>
+
+                <br>
+                <hr>
+
+                <div id="gifs-view"></div>
+
+
+            </div>
+
+            <div class="col-1"></div>
+
+        </div>
+
+    </main>
+    <!-- MAIN _ End -->
+
+
+
+    <!-- STICKY FOOTER BOOTSTRAP  with additional Deadpool image in footer-->
+    <!-- <footer class="footer mt-auto my-2">
+        <img src="assets/images/deadpool-arms.png" alt="Thomas White" class="indeximageviewchanges my-4" height="200px"
+            width="auto">
+    </footer> -->
+    <footer class="footer mt-auto py-1 bg-dark">
+        <div class="container">
+            <span class="text-muted"><a class="mainfont notextdecoration text-muted"
+                    href="mailto:thomas.white.ucf@gmail.com">Thomas.white.ucf@gmail.com</a></span>
+        </div>
+    </footer>
+
+
+
+    <!-- DID NOT WORK WHEN BOOTSTRAP WAS BUT AFTER JQUERY AND API LOGIC app.js -->
+    <!-- ==+===========================+== -->
+
+    <!-- ~ ~ _  Bootsrap Javascript  _ ~ ~ -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- APP LOGIC -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+</body>
+
+</html>
