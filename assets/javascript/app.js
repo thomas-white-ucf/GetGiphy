@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
     // Setting the initial buttons array,and Calling renderGiphyButtons to display the intial Giphy Buttons
-    var gifs = ["not surpised", "wow", "fails"]
+    var gifs = ["not surprised", "wow", "fails"]
 
     // Renders the Giphy Buttons 
     //                             - also called after a button is added
