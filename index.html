@@ -8,58 +8,75 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/modbootstrapstyle.css">
+    <script src="https://kit.fontawesome.com/2143376535.js"></script>
 
     <title>~ GetGiphy ~</title>
 </head>
 
-
-
 <body class="d-flex flex-column h-90">
     <!-- Begin page content -->
-    <main role="main" class="flex-shrink-0 mainfont my-4 mt-0" id="maincontainerindexpage">
+    <main role="main" class="flex-shrink-0 mainfont my-4" id="maincontainerindexpage">
         <!-- MAIN _ Begin page content -->
 
-        <div class="mt-5 container row mx-auto" id="mainRowcontent">
-            <div class="col-1"></div>
-            <div class="col-10 text-danger">
+        <div class="mt-1 container row mx-auto" id="mainRowcontent">
 
+            <!-- Main content -->
+            <div class="col-12 text-success">
 
-                <!-- FROM ADD BUTTONS EXAMPLE - - test adding buttons -->
-                <h1>Gif Search</h1>
+                <!-- Row - Title and Search Bar-->
+                <div class="row">
 
-                <!-- Gif buttons will get dumped here -->
-                <div id="gif-buttons-view" class="m-3"></div>
+                    <div class="float-left col-6 titleText">
+                        <h1>Get Giphy </h1>
+                        <h4>Gif Search App</h4>
+                    </div>
 
-                <form id="gif-form" class="m-3">
-                    <label for="gif-input" class="m-3">Pull gifs with Giphy API!</label>
-                    <input type="text" id="gif-input"><br>
+                    <form id="gif-form" class="float-right col-6 mainfont">
 
-                    <!-- Button triggers new gif to be added -->
-                    <input id="add-gif" type="submit" value="Add a Gif, Yo!">
-                </form>
+                        <!-- Button triggers new gif to be added -->
+                        <span id="add-gif" class="btn btn-outline-success float-right m-2 fab fa-searchengin"
+                            style="font-size: 2rem;">
 
-                <br>
-                <hr>
+                        </span>
+                        <input type="text" id="gif-input" class="float-right m-2 last-search-term">
+                        <label for="gif-input" class="m-3 float-right m-2">Gifs from Giphy API!
 
-                <div id="gifs-view"></div>
+                        </label>
+                    </form>
+                </div>
 
+                <!-- Row - Buttons -->
+                <div class="row my-4">
+
+                    <!-- Gif buttons will get dumped here -->
+                    <div class="my-3 mx-auto" id="gif-buttons-view"></div>
+
+                    <!-- Toggle Gig buttons View -->
+                    <div class="float-right my-3">
+                        <button class="btn btn-outline-warning mx-auto" data-toggle="collapse" href="#toggleButtons"
+                            role="button" aria-expanded="true" aria-controls="toggleButtons">Toggle Button View</button>
+                    </div>
+                </div>
+
+                <!-- Row - Gifs -->
+                <div class="row my-4">
+                    <!-- Created Gifs from Template string in javascript are diplayed here -->
+                    <div class="clearfix" id="gifs-view">
+
+                    </div>
+
+                </div>
 
             </div>
+            <!-- End Main Column-12 -->
 
-            <div class="col-1"></div>
 
         </div>
-
+        <!-- End Main Contanier - - id="maincontainerindexpage" -->
     </main>
-    <!-- MAIN _ End -->
 
 
-
-    <!-- STICKY FOOTER BOOTSTRAP  with additional Deadpool image in footer-->
-    <!-- <footer class="footer mt-auto my-2">
-        <img src="assets/images/deadpool-arms.png" alt="Thomas White" class="indeximageviewchanges my-4" height="200px"
-            width="auto">
-    </footer> -->
+    <!-- Footer -->
     <footer class="footer mt-auto py-1 bg-dark">
         <div class="container">
             <span class="text-muted"><a class="mainfont notextdecoration text-muted"
@@ -68,11 +85,7 @@
     </footer>
 
 
-
-    <!-- DID NOT WORK WHEN BOOTSTRAP WAS BUT AFTER JQUERY AND API LOGIC app.js -->
-    <!-- ==+===========================+== -->
-
-    <!-- ~ ~ _  Bootsrap Javascript  _ ~ ~ -->
+    <!-- ==+===  Bootsrap Javascript  ===+== -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -82,10 +95,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
-    <!-- jQuery -->
+    <!-- ==+===  jQuery  ===+== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- APP LOGIC -->
+
+    <!-- ==+===  Gif App Logic  ===+== -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 
 </body>

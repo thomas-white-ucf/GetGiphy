@@ -1,49 +1,42 @@
-// ==+==================================================================================================+==
+// ==+====================================================================================================+==
 $(document).ready(function () {
 
-    // Setting the initial buttons array,and Calling renderGiphyButtons to display the intial Giphy Buttons
-    var gifs = ["not surprised", "wow", "yum", "fails", "spongebob", "classic"]
+    // Set the default initial buttons array
+    var gifs = ["not surprised", "wow", "yum", "fails", "spongebob", "classic", "you", "surfs"]
 
-    // Renders the Giphy Buttons 
-    //                             - also called after a button is added
-    function renderGiphyButtons() {
-        // Clear old buttons
-        $("#gif-buttons-view").empty()
-        // console.log("RenderGiphyButtons _ log the GIFS ARRAY_==> " + gifs)
-
-        // Set the class="gif" , attribute="data-name" - for each gif using variable-button => a
-        for (var i = 0; i < gifs.length; i++) {
-            var a = $("<button>")
-            a.addClass("gif")
-            a.attr("data-name", gifs[i])
-            a.text(gifs[i])
-            $("#gif-buttons-view").append(a)
-        }
+    // By default display the search from localStorage
+    var localStorageTerm = localStorage.getItem("searchTerm")
+    
+    // Default is null for first time Users, set default localStorageTerm to = "what"
+    if ((localStorageTerm !== null) && (localStorageTerm !== "")) {
+        $(".last-search-term").val(localStorageTerm);
+    } else {
+        localStorageTerm = "what"
+        $(".last-search-term").val(localStorageTerm)
     }
 
-    // Click Event Listener, adds button to gif array with user text entered. 
-    //  - then this calls renderGiphyButtons
-    $("#add-gif").on("click", function (event) {
-        event.preventDefault()
+    // Render Default buttons 
+    renderGiphyButtons()
 
-        var gif = $("#gif-input").val().trim()
-        gifs.push(gif)
-        renderGiphyButtons()
-    });
+    // Get Gifs by name saved in local storage on window load
+    getGifs(localStorageTerm)
 
-    // Handles Click events on Gif Buttons
-    $('#gif-buttons-view').on('click', '.gif', function () {
-        event.preventDefault();
 
+    // ==+=================================================================+==
+
+    // ==+      Functions
+
+    // Search Giphy API with AJAX call using user search term
+    function getGifs(gifName) {
+
+        // Clear last searched Gifs
         $("#gifs-view").empty()
-
+        
         // Building the URL 
-        // Grabbing and storing the data-name property value from the selected button
-        const gifName = $(this).attr("data-name")
-        console.log(gifName)
         const api_key = "&api_key=zBdCvNxX8P5f6fiVaBByp4PHvK4Szqx5"
         const queryURLGiphy = "https://api.giphy.com/v1/gifs/search?q=" + gifName + api_key + "&limit=10"
 
+        // Use URL to perform AJAX call to get gifs from API.Giphy.com
         $.ajax({
             url: queryURLGiphy,
             method: "GET"
@@ -56,64 +49,144 @@ $(document).ready(function () {
                 // Creating variables and elements to hold the image and rating for the gifs
                 for (var i = 0; i < results.length; i++) {
 
-                    var rating = response.data[i].rating
-                    var imgURLStill = response.data[i].images.fixed_height_still.url
-                    var imgURLAnimate = response.data[i].images.fixed_height.url
-                    var rateGif = $("<p>").text("Rating: " + rating)
-                    var image = $("<img>").attr("src", imgURLStill).addClass('gify')
-                    var gifDiv = $("#gifs-view")
-                    image.attr("data-state", "still")
-                    image.attr("data-still", imgURLStill)
-                    image.attr("data-animate", imgURLAnimate)
-                    gifDiv.append(image)
-                    gifDiv.append(rateGif)
+                    var rating = results[i].rating
+                    var imgURLStill = results[i].images.fixed_height_still.url
+                    var imgURLAnimate = results[i].images.fixed_height.url
 
-                    // Display the entire gif above the previous gifs
+                    let givDiv =
+                        `
+                        <div class="card float-left rounded-sm">
+                            <div class="card-body">
+                                <img class="gify card-img-top mb-1" src="${imgURLStill}  alt="Card image"
+                                data-state="still" data-still=${imgURLStill} data-animate=${imgURLAnimate}>
+                                </img>
+                                <p class="card-text">Rating: ${rating}
+                                </p>
+                                <a class="btn btn-primary saveGif">Save Gif
+                                </a>
+                            </div>
+                        </div>
+                                `
+                    // <p class="card-text">Title: ${title}
+                    // </p>
+
+                    // Display the gif template string gifDiv above the previous gif - for each i 
+                    $("#gifs-view").append(givDiv)
+
                 }
-
             })
+    }
+
+    // Renders the Giphy Buttons 
+    function renderGiphyButtons() {
+
+        // Clear old buttons array
+        $("#gif-buttons-view").empty()
+
+        // Set the class="gif" & attribute="data-name" for each gif 
+        for (var i = 0; i < gifs.length; i++) {
+
+            //  a = button with attr(data-name) && text = gif[i]
+            let a =
+                `
+                <button class="btn gif btn-outline-warning m-2 show collapse multi-collapse" 
+                            id="toggleButtons" data-name=${gifs[i]}>
+                            ${gifs[i]}
+                </button>
+                `
+
+            // add the button a to the page
+            $("#gif-buttons-view").append(a)
+        }
+    }
+
+    // Gets specificGif from .gif onclick
+    function saveSpecificGif(specificGifStill, specificGifAnimate) {
+        console.log("saveSpecificGif -> specificGifStill = ", specificGifStill)
+        console.log("saveSpecificGif -> specificGifAnimate = ", specificGifAnimate)
+
+        // saveGifURLs = $(".gify").attr(imgURLStill)
+        // console.log("saveGifURLs", saveGifURLs)
+    }
+
+
+    // ==+=================================================================+==
+
+    // ==+      Click Events
+
+    // Adds button to gif array with user entered text. 
+    $("#add-gif").on("click", function (event) {
+        event.preventDefault()
+
+        // Get user input
+        var gifName = $("#gif-input").val().trim()
+
+        // Do not create button or search if user input is blank = ""
+        if (gifName !== "") {
+
+            gifs.push(gifName)
+        } else {
+            console.log("Gif input from user was empty")
+        }
+
+        // Clear localStorage
+        localStorage.clear();
+        // Store newest search into localStorage
+        localStorage.setItem("searchTerm", gifName);
+
+        // Display Buttons and Gifs
+        renderGiphyButtons()
+        getGifs(gifName)
     });
 
-    // Handles Click events on Gifs themselves
+    // Search Gifs on Gif Button Click
+    $('#gif-buttons-view').on('click', '.gif', function () {
+        event.preventDefault();
+
+        // Grabbing and storing the data-name property value from the selected button
+        const gifName = $(this).attr("data-name")
+        console.log(gifName)
+
+        getGifs(gifName)
+    });
+
+    // Gif Animation > ".gify"
     $("#gifs-view").on("click", ".gify", function () {
-        console.log('this click registered');
-        // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+        event.preventDefault();
+
+        // Get or Set the value of attribute = data-state in our HTML element, to start or stop animation
         var state = $(this).attr("data-state");
+
         // If the clicked image's state is still, update its src attribute to what its data-animate value is.
         // Then, set the image's data-state to animate
-        // Else set src to the data-still value
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
-            
+
         } else {
+            // Else set src to the data-still value
             $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("data-state", "still");
         }
 
+        // get specific Gif to save
+        let specificGifStill = $(this).attr("data-still")
+        let specificGifAnimate = $(this).attr("data-animate")
+        saveSpecificGif(specificGifStill, specificGifAnimate)
     });
 
-    renderGiphyButtons()
-});
+    // Save Gif Button  > ".saveGif"
+    $("#gifs-view").on("click", ".saveGif", function () {
+        event.preventDefault();
 
+        console.log('#gify-view - .saveGif - save Gif button clicked');
+
+        // saveGif();
+
+    });
+
+
+});
 
 // END
 // ==+=================================================================================================+==
-// ==+=================================================================================================+==
-
-
-// ## Bonus Goals
-//         =============
-//         1. Ensure your app is fully mobile responsive.
-
-//         2. Allow users to request additional gifs to be added to the page.
-//         * Each request should ADD 10 gifs to the page, NOT overwrite the existing gifs.
-
-//         3. List additional metadata (title, tags, etc) for each gif in a clean and readable format.
-
-//         4. Integrate this search with additional APIs such as OMDB, or Bands in Town. Be creative and build something you are proud to showcase in your portfolio
-
-//         5. Allow users to add their favorite gifs to a `favorites` section.
-//         * This should persist even when they select or add a new topic.
-//         * If you are looking for a major challenge, look into making this section persist even when the page is reloaded(via        localStorage or cookies). 
-
